@@ -27,24 +27,25 @@ public class ItemSelling extends javax.swing.JFrame {
 
     // create String Vector for get material list
     Vector<String> vec = new Vector<String>();
+//create int Vector for get Material ID 
+     Vector<String> vecID = new Vector<String>();
     // get item list from DB
-    public void getitemList(){
+    public void getitemList() {
         try {
             Connection c = DBConnection.getConnection();
             PreparedStatement retriev = c.prepareStatement("SELECT * FROM materialtlist");
             ResultSet r = retriev.executeQuery();
-            
-            while(r.next()){
-           //   vec.add(r.getString("materialName"));
-              cmbxMainItem.addItem(r.getString("materialName"));
+
+            while (r.next()) {
+                vec.add(r.getString("materialName"));
+                vecID.add(r.getString("materialID"));
+                cmbxMainItem.addItem(r.getString("materialName"));
             }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-    
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -193,7 +194,7 @@ public class ItemSelling extends javax.swing.JFrame {
         jLabel9.setText("Total Price");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 100, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 430, 470));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 510, 470));
 
         btnBack.setBackground(new java.awt.Color(17, 48, 89));
         btnBack.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -207,15 +208,15 @@ public class ItemSelling extends javax.swing.JFrame {
         });
         jPanel1.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 180, 25));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 460, 540));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 550, 540));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-this.dispose();
-new MainForm().setVisible(true);
+        this.dispose();
+        new MainForm().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     /**
