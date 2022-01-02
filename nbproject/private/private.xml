@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/GUI/ItemBuyingForm.java</file>
-            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/GUI/MethodCLass.java</file>
-            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/GUI/Testing.java</file>
-            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/GUI/Testing2.java</file>
-            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/GUI/MaterialList.java</file>
-            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/util/DBConnection.java</file>
+            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/GUI/MainForm.java</file>
+            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/GUI/BuildingREntingDetails.java</file>
+            <file>file:/D:/Semester%20-03/AgroDepartManagementSystem/src/GUI/TaxCollectingsDetailsView.java</file>
         </group>
     </open-files>
 </project-private>

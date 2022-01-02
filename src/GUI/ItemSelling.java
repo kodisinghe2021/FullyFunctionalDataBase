@@ -1,35 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Vector;
+import java.awt.Color;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 import util.DBConnection;
 
-/**
- *
- * @author UComputers
- */
 public class ItemSelling extends javax.swing.JFrame {
+//default constructor
 
-    /**
-     * Creates new form ItemSelling
-     */
     public ItemSelling() {
         initComponents();
         getitemList();
     }
 
-    // create String Vector for get material list
-    Vector<String> vec = new Vector<String>();
-//create int Vector for get Material ID 
-     Vector<String> vecID = new Vector<String>();
-    // get item list from DB
+    //constructor for getting values
+    public ItemSelling(String id, String name, String bq, String sq, String aq, String tableM) {
+        getitemList();
+        initComponents();
+        this.id = id;
+        this.name = name;
+        buyingQnt = bq;
+        sellingQnt = sq;
+        availableQnt = aq;
+        selected_material = tableM;
+        lblAvailQnt.setText(availableQnt);
+        lblSelectedItem.setText(name);
+    }
+
+    //globle variables
+    String id;
+    String name;
+    String buyingQnt;
+    String sellingQnt;
+    String availableQnt;
+    String selected_material;
+    // load item list to combo box
+
     public void getitemList() {
         try {
             Connection c = DBConnection.getConnection();
@@ -37,12 +44,41 @@ public class ItemSelling extends javax.swing.JFrame {
             ResultSet r = retriev.executeQuery();
 
             while (r.next()) {
-                vec.add(r.getString("materialName"));
-                vecID.add(r.getString("materialID"));
-                cmbxMainItem.addItem(r.getString("materialName"));
+                cmbxItem.addItem(r.getString("materialName"));
             }
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    //method for update Material table, the material table will selected by user. 
+    //selected material will send MaterialList.java form and there user will select the item
+    // with selected item and, id,available Qnt, selling Qnt, will send this form
+    // in this method calculate the new avalable quntity
+    public void itemSave() {
+        try {
+            // calculate new avalable Quntity
+            double ttlQnt = Double.parseDouble(availableQnt) - Double.parseDouble(tfQuntity.getText());
+            Connection c = DBConnection.getConnection();
+            //create upadate
+            PreparedStatement updateT = c.prepareStatement("UPDATE " + selected_material + " SET `bq` = '" + buyingQnt + "', `sq` = '" + tfQuntity.getText() + "', `aq` = '" + String.valueOf(ttlQnt) + "' WHERE (`id` = '" + id + "')");
+            updateT.execute();
+            updateT.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    //method for send data to dailyexpences table
+    //column of this table ~ payID, date, amount, description
+
+    public void dailyexpences() {
+        try {
+            Connection c = DBConnection.getConnection();//INSERT INTO `assignment-ad-db`.`dailyincome` (`date`, `amount`, `description`) VALUES ('2021-10-13', '5600', 'savi');
+            PreparedStatement save = c.prepareStatement("INSERT INTO `assignment-ad-db`.`dailyincome` (`date`, `amount`, `description`) VALUES ('" + tfDate.getText() + "', '" + tfTotalPrice.getText() + "', '" + tfDescription.getText() + "')");
+            save.execute();
+            save.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -55,20 +91,23 @@ public class ItemSelling extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lblAvailableQuntity = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        lblSellingQuntity = new javax.swing.JTextField();
-        lblDate = new javax.swing.JTextField();
-        lblDes = new javax.swing.JTextField();
+        tfQuntity = new javax.swing.JTextField();
+        tfDate = new javax.swing.JTextField();
+        tfDescription = new javax.swing.JTextField();
         lblInvoice = new javax.swing.JTextField();
-        cmbxMainItem = new javax.swing.JComboBox<>();
+        cmbxItem = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        tfttlPrice = new javax.swing.JTextField();
+        btnGetList = new javax.swing.JButton();
+        tfTotalPrice = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        btnsave = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        lblSelectedItem = new javax.swing.JLabel();
+        lblAvailQnt = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,78 +127,85 @@ public class ItemSelling extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Date");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 100, 30));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 100, 30));
 
         jLabel2.setBackground(new java.awt.Color(17, 48, 89));
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Invoice");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 100, 30));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 100, 30));
 
         jLabel3.setBackground(new java.awt.Color(17, 48, 89));
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Description");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 100, 30));
-
-        lblAvailableQuntity.setBackground(new java.awt.Color(17, 48, 89));
-        lblAvailableQuntity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblAvailableQuntity.setForeground(new java.awt.Color(255, 255, 255));
-        lblAvailableQuntity.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblAvailableQuntity.setText("Available Quntity");
-        jPanel2.add(lblAvailableQuntity, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 130, 30));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 100, 30));
 
         jLabel5.setBackground(new java.awt.Color(17, 48, 89));
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Quntity");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 100, 30));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 100, 30));
 
         jLabel6.setBackground(new java.awt.Color(17, 48, 89));
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Item");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 100, 30));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 100, 30));
 
-        lblSellingQuntity.setBackground(new java.awt.Color(10, 40, 80));
-        lblSellingQuntity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblSellingQuntity.setForeground(new java.awt.Color(255, 255, 255));
-        lblSellingQuntity.setBorder(null);
-        jPanel2.add(lblSellingQuntity, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 259, 34));
+        tfQuntity.setBackground(new java.awt.Color(10, 40, 80));
+        tfQuntity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tfQuntity.setForeground(new java.awt.Color(255, 255, 255));
+        tfQuntity.setBorder(null);
+        tfQuntity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfQuntityKeyTyped(evt);
+            }
+        });
+        jPanel2.add(tfQuntity, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 259, 34));
 
-        lblDate.setBackground(new java.awt.Color(10, 40, 80));
-        lblDate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblDate.setForeground(new java.awt.Color(255, 255, 255));
-        lblDate.setBorder(null);
-        jPanel2.add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 90, 259, 34));
+        tfDate.setBackground(new java.awt.Color(10, 40, 80));
+        tfDate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tfDate.setForeground(new java.awt.Color(255, 255, 255));
+        tfDate.setBorder(null);
+        tfDate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tfDateMouseClicked(evt);
+            }
+        });
+        tfDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfDateActionPerformed(evt);
+            }
+        });
+        jPanel2.add(tfDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 259, 34));
 
-        lblDes.setBackground(new java.awt.Color(10, 40, 80));
-        lblDes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblDes.setForeground(new java.awt.Color(255, 255, 255));
-        lblDes.setBorder(null);
-        jPanel2.add(lblDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 259, 34));
+        tfDescription.setBackground(new java.awt.Color(10, 40, 80));
+        tfDescription.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tfDescription.setForeground(new java.awt.Color(255, 255, 255));
+        tfDescription.setBorder(null);
+        jPanel2.add(tfDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 259, 34));
 
         lblInvoice.setBackground(new java.awt.Color(10, 40, 80));
         lblInvoice.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblInvoice.setForeground(new java.awt.Color(255, 255, 255));
         lblInvoice.setBorder(null);
-        jPanel2.add(lblInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 259, 34));
+        jPanel2.add(lblInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 259, 34));
 
-        cmbxMainItem.setBackground(new java.awt.Color(17, 48, 89));
-        cmbxMainItem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmbxMainItem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Agricultural equipment", "Seeds", "Plants", "Fertilizer", "Insecticides and herbicides" }));
-        jPanel2.add(cmbxMainItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 259, 34));
+        cmbxItem.setBackground(new java.awt.Color(17, 48, 89));
+        cmbxItem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jPanel2.add(cmbxItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 259, 34));
 
         jButton1.setBackground(new java.awt.Color(17, 48, 89));
         jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Clear");
         jButton1.setBorder(null);
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 130, 25));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 130, 25));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(204, 255, 204));
@@ -167,34 +213,78 @@ public class ItemSelling extends javax.swing.JFrame {
         jLabel7.setText("Item Selling");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 40));
 
-        jButton3.setBackground(new java.awt.Color(17, 48, 89));
-        jButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Save");
-        jButton3.setBorder(null);
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 130, 25));
+        btnGetList.setBackground(new java.awt.Color(17, 48, 89));
+        btnGetList.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnGetList.setForeground(new java.awt.Color(255, 255, 255));
+        btnGetList.setText("Get List");
+        btnGetList.setBorder(null);
+        btnGetList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetListActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnGetList, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 130, 25));
 
-        jLabel8.setBackground(new java.awt.Color(17, 48, 89));
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText("Available Quntity");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 130, 30));
-
-        tfttlPrice.setBackground(new java.awt.Color(10, 40, 80));
-        tfttlPrice.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tfttlPrice.setForeground(new java.awt.Color(255, 255, 255));
-        tfttlPrice.setBorder(null);
-        jPanel2.add(tfttlPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 259, 34));
+        tfTotalPrice.setBackground(new java.awt.Color(10, 40, 80));
+        tfTotalPrice.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tfTotalPrice.setForeground(new java.awt.Color(255, 255, 255));
+        tfTotalPrice.setBorder(null);
+        jPanel2.add(tfTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 259, 34));
 
         jLabel9.setBackground(new java.awt.Color(17, 48, 89));
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Total Price");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 100, 30));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 100, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 510, 470));
+        btnsave.setBackground(new java.awt.Color(17, 48, 89));
+        btnsave.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnsave.setForeground(new java.awt.Color(255, 255, 255));
+        btnsave.setText("Save");
+        btnsave.setBorder(null);
+        btnsave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsaveActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnsave, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 440, 130, 25));
+
+        jLabel10.setBackground(new java.awt.Color(17, 48, 89));
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel10.setText("Selected item");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 120, 30));
+
+        lblSelectedItem.setBackground(new java.awt.Color(17, 48, 89));
+        lblSelectedItem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lblSelectedItem.setForeground(new java.awt.Color(255, 255, 255));
+        lblSelectedItem.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblSelectedItem.setText(" ");
+        lblSelectedItem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 51)));
+        lblSelectedItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSelectedItemMouseClicked(evt);
+            }
+        });
+        jPanel2.add(lblSelectedItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 160, 30));
+
+        lblAvailQnt.setBackground(new java.awt.Color(17, 48, 89));
+        lblAvailQnt.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lblAvailQnt.setForeground(new java.awt.Color(255, 255, 255));
+        lblAvailQnt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAvailQnt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 51)));
+        jPanel2.add(lblAvailQnt, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 120, 30));
+
+        jLabel11.setBackground(new java.awt.Color(17, 48, 89));
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Available Quntity");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 120, 30));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 480, 570));
 
         btnBack.setBackground(new java.awt.Color(17, 48, 89));
         btnBack.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -208,7 +298,7 @@ public class ItemSelling extends javax.swing.JFrame {
         });
         jPanel1.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 180, 25));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 550, 540));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 510, 640));
 
         pack();
         setLocationRelativeTo(null);
@@ -218,6 +308,44 @@ public class ItemSelling extends javax.swing.JFrame {
         this.dispose();
         new MainForm().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void lblSelectedItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectedItemMouseClicked
+
+    }//GEN-LAST:event_lblSelectedItemMouseClicked
+
+    private void btnGetListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetListActionPerformed
+        this.dispose();
+        selected_material = cmbxItem.getSelectedItem().toString();
+        new MaterialList(selected_material, 1).setVisible(true);
+    }//GEN-LAST:event_btnGetListActionPerformed
+
+    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+        double a = Double.parseDouble(tfQuntity.getText());
+        double b = Double.parseDouble(availableQnt);
+        if (a <= b) {
+            itemSave();
+            dailyexpences();
+            JOptionPane.showMessageDialog(this, "All details saved", "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            new ItemSelling().setVisible(true);
+        }else{
+        JOptionPane.showMessageDialog(this,"please enter Quentity below available","Out of limit", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnsaveActionPerformed
+
+    private void tfDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfDateMouseClicked
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date = new java.util.Date();
+        tfDate.setText(formatter.format(date));
+    }//GEN-LAST:event_tfDateMouseClicked
+
+    private void tfQuntityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfQuntityKeyTyped
+
+    }//GEN-LAST:event_tfQuntityKeyTyped
+
+    private void tfDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfDateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -256,24 +384,27 @@ public class ItemSelling extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JComboBox<String> cmbxMainItem;
+    private javax.swing.JButton btnGetList;
+    private javax.swing.JButton btnsave;
+    private javax.swing.JComboBox<String> cmbxItem;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblAvailableQuntity;
-    private javax.swing.JTextField lblDate;
-    private javax.swing.JTextField lblDes;
+    public javax.swing.JLabel lblAvailQnt;
     private javax.swing.JTextField lblInvoice;
-    private javax.swing.JTextField lblSellingQuntity;
-    private javax.swing.JTextField tfttlPrice;
+    public javax.swing.JLabel lblSelectedItem;
+    private javax.swing.JTextField tfDate;
+    private javax.swing.JTextField tfDescription;
+    private javax.swing.JTextField tfQuntity;
+    private javax.swing.JTextField tfTotalPrice;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,30 +7,48 @@ import util.DBConnection;
 public class MaterialList extends javax.swing.JFrame {
 
     String material;
+    int pageI = 2;
+// default constructor
 
     public MaterialList() {
         initComponents();
     }
+// constructor for get value from other form
 
-    public MaterialList(String mat) {
+    public MaterialList(String mat, int pg) {
         initComponents();
         this.material = mat;
+        pageI = pg;
         retrieve();
     }
 
+    // method for pass seleced value from table
+    public void getInfoFromTbl() {
+        int irow = tblM.getSelectedRow();
+        String name = tblM.getValueAt(irow, 0).toString();
+        String availQnt = tblM.getValueAt(irow, 3).toString();
+        String mat = material;
+        ItemBuyingForm objitb = new ItemBuyingForm();
+        objitb.lblAvailQnt.setText(availQnt);
+        objitb.lblMaterial.setText(mat);
+        objitb.lblSelectedItem.setText(name);
+        new ItemBuyingForm().setVisible(true);
+    }
+// retriev data from DB from any table same as = material
+
     public void retrieve() {
         try {
-            System.out.println("retreive method " + material);
             ResultSet r = DBConnection.query("SELECT *FROM " + material + " ");
             while (r.next()) {
+                String id = r.getString("id");
                 String name = r.getString("name");
                 String byQnt = r.getString("bq");
                 String slQnt = r.getString("sq");
                 String avalQnt = r.getString("aq");
-                String[] sArr = {name, byQnt, slQnt, avalQnt};
+                String[] sArr = {id, name, byQnt, slQnt, avalQnt};
+                //define table and add values for table
                 DefaultTableModel tblModel = (DefaultTableModel) tblM.getModel();
                 tblModel.addRow(sArr);
-                System.out.println(name + byQnt + slQnt + avalQnt);
             }
 
         } catch (Exception e) {
@@ -68,15 +86,15 @@ public class MaterialList extends javax.swing.JFrame {
         });
         jPanel1.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 40, 25));
 
-        tblM.setBackground(new java.awt.Color(17, 48, 89));
+        tblM.setBackground(new java.awt.Color(204, 204, 204));
         tblM.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        tblM.setForeground(new java.awt.Color(255, 255, 255));
+        tblM.setForeground(new java.awt.Color(0, 0, 0));
         tblM.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Name", "Buying Quntity", "Selling Quntity", "Available Quntity"
+                "ID", "Name", "Buying Quntity", "Selling Quntity", "Available Quntity"
             }
         ));
         jScrollPane1.setViewportView(tblM);
@@ -118,11 +136,24 @@ public class MaterialList extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btngetItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngetItemActionPerformed
-        // TODO add your handling code here:
+        int irow = tblM.getSelectedRow();
+        String id = tblM.getValueAt(irow, 0).toString();
+        String name = tblM.getValueAt(irow, 1).toString();
+        String bq = tblM.getValueAt(irow, 2).toString();
+        String sq = tblM.getValueAt(irow, 3).toString();
+        String aq = tblM.getValueAt(irow, 4).toString();
+        if (pageI == 0) {
+            new ItemBuyingForm(id, name, bq, sq, aq, material).setVisible(true);
+            this.dispose();
+        } else if (pageI == 1) {
+            new ItemSelling(id, name, bq, sq, aq, material).setVisible(true);
+            this.dispose();
+        }
+
     }//GEN-LAST:event_btngetItemActionPerformed
 
     private void btnBack2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack2ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnBack2ActionPerformed
 
     /**
