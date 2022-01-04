@@ -140,6 +140,7 @@ public class Expenditures extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMain = new javax.swing.JTable();
+        btnPrint = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -342,7 +343,19 @@ public class Expenditures extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblMain);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 360, 380));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 360, 370));
+
+        btnPrint.setBackground(new java.awt.Color(17, 48, 89));
+        btnPrint.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrint.setText("Print");
+        btnPrint.setBorder(null);
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnPrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 400, 130, 25));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 380, 440));
 
@@ -391,7 +404,7 @@ public class Expenditures extends javax.swing.JFrame {
         serchResult_Date();
     }//GEN-LAST:event_tfDateKeyTyped
 
-    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         if (chbxDate.isSelected() && chbxAmount.isSelected()) {
             filterByAmount_And_Date();
         } else if (chbxDate.isSelected()) {
@@ -400,7 +413,7 @@ public class Expenditures extends javax.swing.JFrame {
             filterByAmount();
         }
 
-    }//GEN-LAST:event_btnFilterActionPerformed
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     private void chbxAmountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbxAmountMouseClicked
         tfMin.setText("");
@@ -425,6 +438,10 @@ public class Expenditures extends javax.swing.JFrame {
     private void tfDateEndFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfDateEndFocusLost
 
     }//GEN-LAST:event_tfDateEndFocusLost
+
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -464,6 +481,7 @@ public class Expenditures extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnFilter;
+    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnRemove;
     private javax.swing.JCheckBox chbxAmount;
     private javax.swing.JCheckBox chbxDate;

@@ -7,7 +7,7 @@ import util.DBConnection;
 public class MaterialList extends javax.swing.JFrame {
 
     String material;
-    int pageI = 2;
+    int pageI = 10;
 // default constructor
 
     public MaterialList() {
@@ -147,6 +147,9 @@ public class MaterialList extends javax.swing.JFrame {
             this.dispose();
         } else if (pageI == 1) {
             new ItemSelling(id, name, bq, sq, aq, material).setVisible(true);
+            this.dispose();
+        } else if (pageI == 2) {
+            new AddAuction(id, name, bq, sq, aq, material).setVisible(true);
             this.dispose();
         }
 

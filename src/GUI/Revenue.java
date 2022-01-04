@@ -114,7 +114,6 @@ public class Revenue extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        btnFilter = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         tfDateEnd = new javax.swing.JTextField();
         tfDateStart = new javax.swing.JTextField();
@@ -130,11 +129,13 @@ public class Revenue extends javax.swing.JFrame {
         tfDate = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         btnRemove = new javax.swing.JButton();
+        btnFilter1 = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMain = new javax.swing.JTable();
+        btnPrint = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -147,18 +148,6 @@ public class Revenue extends javax.swing.JFrame {
         jPanel2.setAlignmentX(1.0F);
         jPanel2.setAlignmentY(1.0F);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnFilter.setBackground(new java.awt.Color(17, 48, 89));
-        btnFilter.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnFilter.setForeground(new java.awt.Color(255, 255, 255));
-        btnFilter.setText("Filter");
-        btnFilter.setBorder(null);
-        btnFilter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFilterActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 130, 25));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -288,6 +277,18 @@ public class Revenue extends javax.swing.JFrame {
         });
         jPanel2.add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 130, 25));
 
+        btnFilter1.setBackground(new java.awt.Color(17, 48, 89));
+        btnFilter1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnFilter1.setForeground(new java.awt.Color(255, 255, 255));
+        btnFilter1.setText("Filter");
+        btnFilter1.setBorder(null);
+        btnFilter1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFilter1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnFilter1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 130, 25));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 360, 500));
 
         btnBack.setBackground(new java.awt.Color(17, 48, 89));
@@ -327,7 +328,19 @@ public class Revenue extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblMain);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 390, 440));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 390, 420));
+
+        btnPrint.setBackground(new java.awt.Color(17, 48, 89));
+        btnPrint.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrint.setText("Print");
+        btnPrint.setBorder(null);
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnPrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 460, 130, 25));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 410, 500));
 
@@ -370,7 +383,7 @@ new MainForm().setVisible(true);
         }
     }//GEN-LAST:event_chbxAmountMouseClicked
 
-    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
      if(chbxDate.isSelected() && chbxAmount.isSelected()){
      filterByAmount_And_Date();
      }else if(chbxDate.isSelected()){
@@ -379,7 +392,7 @@ new MainForm().setVisible(true);
          filterByAmount();
      }
        
-    }//GEN-LAST:event_btnFilterActionPerformed
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         retrieve();
@@ -400,6 +413,10 @@ new MainForm().setVisible(true);
     private void tfDateKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfDateKeyTyped
 serchResult_Date();
     }//GEN-LAST:event_tfDateKeyTyped
+
+    private void btnFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilter1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFilter1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -438,7 +455,8 @@ serchResult_Date();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnFilter;
+    private javax.swing.JButton btnFilter1;
+    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnRemove;
     private javax.swing.JCheckBox chbxAmount;
     private javax.swing.JCheckBox chbxDate;

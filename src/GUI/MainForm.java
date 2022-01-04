@@ -1,5 +1,7 @@
 package GUI;
 
+import com.sun.media.sound.AuFileReader;
+
 public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
@@ -27,16 +29,16 @@ public class MainForm extends javax.swing.JFrame {
         btnAllExpenditure = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton16 = new javax.swing.JButton();
+        btnRentingDetails = new javax.swing.JButton();
         btnTaxView = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jButton19 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
+        btnAuctionDetails = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton12 = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        btnSubsidizedDetails = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -175,13 +177,18 @@ public class MainForm extends javax.swing.JFrame {
         jLabel3.setText("Income and Expenditure Report");
         jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
 
-        jButton16.setBackground(new java.awt.Color(15, 40, 70));
-        jButton16.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton16.setForeground(new java.awt.Color(204, 204, 255));
-        jButton16.setText("Renting");
-        jButton16.setToolTipText("");
-        jButton16.setBorder(null);
-        jPanel6.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, 137, 173, 35));
+        btnRentingDetails.setBackground(new java.awt.Color(15, 40, 70));
+        btnRentingDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnRentingDetails.setForeground(new java.awt.Color(204, 204, 255));
+        btnRentingDetails.setText("Renting");
+        btnRentingDetails.setToolTipText("");
+        btnRentingDetails.setBorder(null);
+        btnRentingDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRentingDetailsActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnRentingDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, 137, 173, 35));
 
         btnTaxView.setBackground(new java.awt.Color(15, 40, 70));
         btnTaxView.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -196,7 +203,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         jPanel6.add(btnTaxView, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 137, 173, 35));
 
-        jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 416, 210));
+        jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 416, 230));
 
         jPanel7.setBackground(new java.awt.Color(17, 48, 89));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -204,50 +211,22 @@ public class MainForm extends javax.swing.JFrame {
         jLabel4.setBackground(new java.awt.Color(204, 204, 255));
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 204, 255));
-        jLabel4.setText("Subsidized Details");
-        jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 12, -1, -1));
+        jLabel4.setText("Auction");
+        jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
-        jButton19.setBackground(new java.awt.Color(15, 40, 70));
-        jButton19.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton19.setForeground(new java.awt.Color(204, 204, 255));
-        jButton19.setText("New Farmer");
-        jButton19.setBorder(null);
-        jButton19.addActionListener(new java.awt.event.ActionListener() {
+        btnAuctionDetails.setBackground(new java.awt.Color(15, 40, 70));
+        btnAuctionDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnAuctionDetails.setForeground(new java.awt.Color(204, 204, 255));
+        btnAuctionDetails.setText("Auction Details");
+        btnAuctionDetails.setBorder(null);
+        btnAuctionDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton19ActionPerformed(evt);
+                btnAuctionDetailsActionPerformed(evt);
             }
         });
-        jPanel7.add(jButton19, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 86, 173, 35));
+        jPanel7.add(btnAuctionDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 173, 35));
 
-        jButton18.setBackground(new java.awt.Color(15, 40, 70));
-        jButton18.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton18.setForeground(new java.awt.Color(204, 204, 255));
-        jButton18.setText("Farmer Details");
-        jButton18.setBorder(null);
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 86, 173, 35));
-
-        jButton21.setBackground(new java.awt.Color(15, 40, 70));
-        jButton21.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton21.setForeground(new java.awt.Color(204, 204, 255));
-        jButton21.setText("Update Farmer");
-        jButton21.setToolTipText("");
-        jButton21.setBorder(null);
-        jPanel7.add(jButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 139, 173, 35));
-
-        jButton20.setBackground(new java.awt.Color(15, 40, 70));
-        jButton20.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton20.setForeground(new java.awt.Color(204, 204, 255));
-        jButton20.setText("Distribution Details");
-        jButton20.setToolTipText("");
-        jButton20.setBorder(null);
-        jPanel7.add(jButton20, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 139, 173, 35));
-
-        jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 360, 437, 209));
+        jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 475, 437, 110));
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
@@ -267,7 +246,30 @@ public class MainForm extends javax.swing.JFrame {
         });
         jPanel3.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 173, 35));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 580));
+        jPanel8.setBackground(new java.awt.Color(17, 48, 89));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setBackground(new java.awt.Color(204, 204, 255));
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(204, 204, 255));
+        jLabel6.setText("Subsidized Details");
+        jPanel8.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 12, -1, -1));
+
+        btnSubsidizedDetails.setBackground(new java.awt.Color(15, 40, 70));
+        btnSubsidizedDetails.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnSubsidizedDetails.setForeground(new java.awt.Color(204, 204, 255));
+        btnSubsidizedDetails.setText("Subsideized Details");
+        btnSubsidizedDetails.setBorder(null);
+        btnSubsidizedDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubsidizedDetailsActionPerformed(evt);
+            }
+        });
+        jPanel8.add(btnSubsidizedDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 173, 35));
+
+        jPanel3.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 360, 437, 110));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 610));
 
         pack();
         setLocationRelativeTo(null);
@@ -288,13 +290,10 @@ public class MainForm extends javax.swing.JFrame {
         new Revenue().setVisible(true);
     }//GEN-LAST:event_jButton14ActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton19ActionPerformed
+    private void btnAuctionDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuctionDetailsActionPerformed
+this.dispose();
+new AuctionForm().setVisible(true);
+    }//GEN-LAST:event_btnAuctionDetailsActionPerformed
 
     private void btnTaxCollectingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaxCollectingActionPerformed
         this.dispose();
@@ -330,6 +329,16 @@ public class MainForm extends javax.swing.JFrame {
         this.dispose();
         new TaxCollectingsDetailsView().setVisible(true);
     }//GEN-LAST:event_btnTaxViewActionPerformed
+
+    private void btnRentingDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentingDetailsActionPerformed
+        this.dispose();
+        new BuildingREntingDetails().setVisible(true);
+    }//GEN-LAST:event_btnRentingDetailsActionPerformed
+
+    private void btnSubsidizedDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubsidizedDetailsActionPerformed
+this.dispose();
+new FertilizerDistributionDEtails().setVisible(true);
+    }//GEN-LAST:event_btnSubsidizedDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,31 +377,31 @@ public class MainForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAllExpenditure;
+    private javax.swing.JButton btnAuctionDetails;
     private javax.swing.JButton btnBill;
     private javax.swing.JButton btnDocfee;
     private javax.swing.JButton btnItemBuying;
     private javax.swing.JButton btnRenting;
+    private javax.swing.JButton btnRentingDetails;
+    private javax.swing.JButton btnSubsidizedDetails;
     private javax.swing.JButton btnTaxCollecting;
     private javax.swing.JButton btnTaxView;
     private javax.swing.JButton btnitemSelling;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

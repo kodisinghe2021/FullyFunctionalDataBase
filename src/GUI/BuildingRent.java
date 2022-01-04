@@ -17,8 +17,8 @@ public class BuildingRent extends javax.swing.JFrame {
     public void saveD() {
         try {
             Connection c = DBConnection.getConnection();
-            PreparedStatement save = c.prepareStatement("INSERT INTO `assignment-ad-db`.`buildingrenting` (`date`, `description`, `clientName`, `clientNIC`, `clientContact`, `bookingDate`, `bookingTime`, `totalAmount`) "
-                    + "VALUES ('" + tfDate.getText() + "', '" + tfDescription.getText() + "', '" + tfClientName.getText() + "', '" + tfClientNIC.getText() + "', '" + tfClientContact.getText() + "', '" + tfBookingDate.getText() + "', '" + tfBookingTime.getText() + "', '" + tfTtlAmount.getText() + "')");
+            PreparedStatement save = c.prepareStatement("INSERT INTO `assignment-ad-db`.`buildingrenting` (`date`, `description`, `clientName`, `clientNIC`, `clientContact`, `bookingDate`, `bookingTime`, `totalAmount`,`buildingIndex`) "
+                    + "VALUES ('" + tfDate.getText() + "', '" + tfDescription.getText() + "', '" + tfClientName.getText() + "', '" + tfClientNIC.getText() + "', '" + tfClientContact.getText() + "', '" + tfBookingDate.getText() + "', '" + tfBuildingIndex.getText() + "', '" + tfTtlAmount.getText() + "', '" + tfBuildingIndex.getText() + "')");
             save.execute();
             save.close();
             JOptionPane.showMessageDialog(this, "All details saved", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -51,9 +51,11 @@ public class BuildingRent extends javax.swing.JFrame {
         tfBookingDate = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        tfBookingTime = new javax.swing.JTextField();
+        tfBuildingIndex = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         tfTimePeriod = new javax.swing.JTextField();
+        tfBookingTime1 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,7 +119,7 @@ public class BuildingRent extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Clear");
         jButton1.setBorder(null);
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 130, 25));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, 130, 25));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(204, 255, 204));
@@ -135,20 +137,20 @@ public class BuildingRent extends javax.swing.JFrame {
                 btnSaveActionPerformed(evt);
             }
         });
-        jPanel2.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 130, 25));
+        jPanel2.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, 130, 25));
 
         tfTtlAmount.setBackground(new java.awt.Color(10, 40, 80));
         tfTtlAmount.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tfTtlAmount.setForeground(new java.awt.Color(255, 255, 255));
         tfTtlAmount.setBorder(null);
-        jPanel2.add(tfTtlAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, 259, 34));
+        jPanel2.add(tfTtlAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 410, 259, 34));
 
         jLabel9.setBackground(new java.awt.Color(17, 48, 89));
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Total Amount");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 100, 30));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 100, 30));
 
         tfClientNIC.setBackground(new java.awt.Color(10, 40, 80));
         tfClientNIC.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -193,29 +195,42 @@ public class BuildingRent extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel13.setText("Booking Time");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 100, 30));
+        jLabel13.setText("Building Index");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 100, 30));
 
-        tfBookingTime.setBackground(new java.awt.Color(10, 40, 80));
-        tfBookingTime.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tfBookingTime.setForeground(new java.awt.Color(255, 255, 255));
-        tfBookingTime.setBorder(null);
-        jPanel2.add(tfBookingTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 259, 34));
+        tfBuildingIndex.setBackground(new java.awt.Color(10, 40, 80));
+        tfBuildingIndex.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tfBuildingIndex.setForeground(new java.awt.Color(255, 255, 255));
+        tfBuildingIndex.setBorder(null);
+        jPanel2.add(tfBuildingIndex, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 259, 34));
 
         jLabel14.setBackground(new java.awt.Color(17, 48, 89));
         jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel14.setText("Time Period");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 100, 30));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 100, 30));
 
         tfTimePeriod.setBackground(new java.awt.Color(10, 40, 80));
         tfTimePeriod.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tfTimePeriod.setForeground(new java.awt.Color(255, 255, 255));
         tfTimePeriod.setBorder(null);
-        jPanel2.add(tfTimePeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 259, 34));
+        jPanel2.add(tfTimePeriod, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, 259, 34));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 430, 470));
+        tfBookingTime1.setBackground(new java.awt.Color(10, 40, 80));
+        tfBookingTime1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tfBookingTime1.setForeground(new java.awt.Color(255, 255, 255));
+        tfBookingTime1.setBorder(null);
+        jPanel2.add(tfBookingTime1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 259, 34));
+
+        jLabel15.setBackground(new java.awt.Color(17, 48, 89));
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel15.setText("Booking Time");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 100, 30));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 430, 530));
 
         jButton2.setBackground(new java.awt.Color(17, 48, 89));
         jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -229,7 +244,7 @@ public class BuildingRent extends javax.swing.JFrame {
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 180, 25));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 460, 540));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 460, 600));
 
         pack();
         setLocationRelativeTo(null);
@@ -295,6 +310,7 @@ public class BuildingRent extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
@@ -302,7 +318,8 @@ public class BuildingRent extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField tfBookingDate;
-    private javax.swing.JTextField tfBookingTime;
+    private javax.swing.JTextField tfBookingTime1;
+    private javax.swing.JTextField tfBuildingIndex;
     private javax.swing.JTextField tfClientContact;
     private javax.swing.JTextField tfClientNIC;
     private javax.swing.JTextField tfClientName;

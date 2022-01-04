@@ -5,10 +5,14 @@ import javax.swing.table.DefaultTableModel;
 import util.DBConnection;
 
 public class TaxCollectingsDetailsView extends javax.swing.JFrame {
-    
+
     public TaxCollectingsDetailsView() {
         initComponents();
         retrieve();
+        tfDateStart.setVisible(false);
+        tfDateEnd.setVisible(false);
+        tfMin.setVisible(false);
+        tfMax.setVisible(false);
     }
 
     // get data from DB to Table
@@ -26,7 +30,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
                 //define table and add values for table
                 tblModel.addRow(sArr);
             }
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -46,7 +50,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
                 String[] sArr = {date, txnum, amount, fname};
                 tblModelF.addRow(sArr);
             }
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -66,7 +70,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
                 String[] sArr = {date, txnum, amount, fname};
                 tblModelF.addRow(sArr);
             }
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -86,7 +90,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
                 String[] sArr = {date, txnum, amount, fname};
                 tblModelF.addRow(sArr);
             }
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -107,7 +111,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
                 String[] sArr = {dt, txnum, amount, fname};
                 tblModelF.addRow(sArr);
             }
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -128,7 +132,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
                 String[] sArr = {dt, txnum, amount, fname};
                 tblModelF.addRow(sArr);
             }
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -149,7 +153,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
                 String[] sArr = {dt, txnum, amount, fname};
                 tblModelF.addRow(sArr);
             }
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -158,15 +162,14 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
 
     public void findTtlAmount() {
         System.out.println(" in method");
-        double ttl=0.0;
+        double ttl = 0.0;
         String from = tfTtlFrom.getText();
         String to = tfTtlTo.getText();
-        System.out.println(from+"  "+to);
         try {
             ResultSet r = DBConnection.query("SELECT * FROM taxcollectings WHERE amount BETWEEN '" + from + "' AND '" + to + "' ");
-           
+
             while (r.next()) {
-                String am = r.getString("amount");   
+                String am = r.getString("amount");
                 System.out.println(am);
                 ttl = ttl + Double.parseDouble(am);
             }
@@ -175,7 +178,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -214,6 +217,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        btnPrint = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -262,6 +266,11 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
         chbxDate.setForeground(new java.awt.Color(255, 255, 255));
         chbxDate.setText("Date");
         chbxDate.setBorder(null);
+        chbxDate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chbxDateMouseClicked(evt);
+            }
+        });
         jPanel2.add(chbxDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 100, 30));
 
         chbxAmount.setBackground(new java.awt.Color(17, 48, 89));
@@ -269,6 +278,11 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
         chbxAmount.setForeground(new java.awt.Color(255, 255, 255));
         chbxAmount.setText("Amount");
         chbxAmount.setBorder(null);
+        chbxAmount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chbxAmountMouseClicked(evt);
+            }
+        });
         jPanel2.add(chbxAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 100, 30));
 
         tfMin.setBackground(new java.awt.Color(10, 40, 80));
@@ -355,6 +369,11 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
         tfFamerName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tfFamerName.setForeground(new java.awt.Color(255, 255, 255));
         tfFamerName.setBorder(null);
+        tfFamerName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfFamerNameKeyTyped(evt);
+            }
+        });
         jPanel3.add(tfFamerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 150, 34));
 
         tfDate.setBackground(new java.awt.Color(10, 40, 80));
@@ -391,6 +410,11 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
         tfTxNumber.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tfTxNumber.setForeground(new java.awt.Color(255, 255, 255));
         tfTxNumber.setBorder(null);
+        tfTxNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfTxNumberKeyTyped(evt);
+            }
+        });
         jPanel3.add(tfTxNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 150, 34));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 410, 330));
@@ -457,7 +481,19 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
         jLabel15.setText("Total Erning");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 40));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 610, 690, 120));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 670, 120));
+
+        btnPrint.setBackground(new java.awt.Color(17, 48, 89));
+        btnPrint.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrint.setText("Print");
+        btnPrint.setBorder(null);
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnPrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 610, 100, 25));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 740));
 
@@ -466,10 +502,11 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+this.dispose();
+new MainForm().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         if (chbxDate.isSelected() && chbxAmount.isSelected()) {
             filterByAmount_And_Date();
         } else if (chbxDate.isSelected()) {
@@ -477,9 +514,7 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
         } else if (chbxAmount.isSelected()) {
             filterByAmount();
         }
-        
-
-    }//GEN-LAST:event_btnFilterActionPerformed
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         retrieve();
@@ -490,8 +525,44 @@ public class TaxCollectingsDetailsView extends javax.swing.JFrame {
     }//GEN-LAST:event_tfDateKeyTyped
 
     private void lblTTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTTMouseClicked
-findTtlAmount();
+        findTtlAmount();
     }//GEN-LAST:event_lblTTMouseClicked
+
+    private void chbxDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbxDateMouseClicked
+        if (chbxDate.isSelected()) {
+            tfDateStart.setVisible(true);
+            tfDateEnd.setVisible(true);
+        } else if (!chbxDate.isSelected()) {
+            tfDateStart.setVisible(false);
+            tfDateEnd.setVisible(false);
+            tfMin.setVisible(false);
+            tfMax.setVisible(false);
+        }
+
+    }//GEN-LAST:event_chbxDateMouseClicked
+
+    private void chbxAmountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbxAmountMouseClicked
+        if (chbxAmount.isSelected()) {
+            tfMin.setVisible(true);
+            tfMax.setVisible(true);
+        } else if (!chbxAmount.isSelected()) {
+            tfMin.setVisible(false);
+            tfMax.setVisible(false);
+        }
+
+    }//GEN-LAST:event_chbxAmountMouseClicked
+
+    private void tfFamerNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFamerNameKeyTyped
+serchResult_FarmerName();
+    }//GEN-LAST:event_tfFamerNameKeyTyped
+
+    private void tfTxNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTxNumberKeyTyped
+serchResult_taxNumber();
+    }//GEN-LAST:event_tfTxNumberKeyTyped
+
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -530,6 +601,7 @@ findTtlAmount();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFilter;
+    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnRemove;
     private javax.swing.JCheckBox chbxAmount;
     private javax.swing.JCheckBox chbxDate;
